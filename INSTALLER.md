@@ -4,15 +4,15 @@
 
 ## Install
 
-Run the setup executable. It installs the application for the current Windows user at:
+Run the setup executable to open the standard Windows installation wizard. It requires administrator permission and defaults to:
 
 ```text
-%LOCALAPPDATA%\Programs\Color Analyzer
+C:\Program Files\Color Analyzer
 ```
 
-It also creates a Start Menu shortcut named `Color Analyzer`.
+The wizard lets you choose another installation path and optionally creates a desktop shortcut. A Start Menu shortcut named `Color Analyzer` is created automatically.
 
-The installer does not require CUDA, Qt, OpenImageIO, CMake, Visual Studio, or administrator access.
+The installed program does not require CUDA, Qt, OpenImageIO, CMake, Visual Studio, or NVIDIA drivers.
 
 ## Rebuild
 
@@ -20,11 +20,11 @@ From the repository root, run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\installer\build-installer.ps1 `
-  -PortableZip "C:\path\to\Color-Analyzer-0.1.0-windows-x64-CPU-portable.zip"
+  -IsccPath "C:\path\to\Inno Setup 6\ISCC.exe"
 ```
 
-The portable ZIP must contain the same CPU distribution as the repository root. The build script uses Windows IExpress, which is included with Windows, and writes the named installer ZIP to the `installer` directory.
+The build script uses Inno Setup and packages the CPU distribution from the repository root. It writes the named installer ZIP to the `installer` directory.
 
 ## Remove
 
-The application is user-scoped. To remove it, close the application, delete `%LOCALAPPDATA%\Programs\Color Analyzer`, and remove the `Color Analyzer` shortcut from the Start Menu.
+Use Windows Settings > Apps or Control Panel > Programs and Features to uninstall `Color Analyzer`.

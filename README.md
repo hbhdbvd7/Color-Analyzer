@@ -1,6 +1,6 @@
 # Color Analyzer 0.1.0 CPU
 
-> **Download installer:** [Color-Analyzer-0.1.0-CPU-Installer.zip](https://github.com/hbhdbvd7/Color-Analyzer/raw/refs/heads/main/installer/Color-Analyzer-0.1.0-CPU-Installer.zip)
+> **Download GUI installer (default: `C:\Program Files\Color Analyzer`):** [Color-Analyzer-0.1.0-CPU-Installer.zip](https://github.com/hbhdbvd7/Color-Analyzer/raw/refs/heads/main/installer/Color-Analyzer-0.1.0-CPU-Installer.zip)
 
 Windows x64 纯 CPU 静帧色彩分析器便携版。
 
@@ -48,7 +48,7 @@ The bundled third-party runtime libraries remain subject to their respective lic
 
 ## Installer
 
-For a per-user Windows installation with a Start Menu shortcut, run:
+For the standard Windows installation wizard, download and run:
 
 [`installer/Color-Analyzer-0.1.0-CPU-Installer.zip`](installer/Color-Analyzer-0.1.0-CPU-Installer.zip)
 
