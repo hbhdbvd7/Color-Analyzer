@@ -43,3 +43,11 @@ The ICO is embedded into `Color Analyzer.exe`; the PNG is included for documenta
 Do not separate the executable from its Qt plugin folders, OpenImageIO DLLs, or Microsoft runtime DLLs. This repository is a ready-to-run portable distribution rather than the C++ development source tree.
 
 The bundled third-party runtime libraries remain subject to their respective licenses.
+
+## Installer
+
+For a per-user Windows installation with a Start Menu shortcut, run:
+
+[`installer/Color-Analyzer-0.1.0-Setup.exe`](installer/Color-Analyzer-0.1.0-Setup.exe)
+
+See [`INSTALLER.md`](INSTALLER.md) for installation details and rebuild instructions.
