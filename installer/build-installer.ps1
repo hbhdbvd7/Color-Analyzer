@@ -7,14 +7,14 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-if (-not $OutputPath) { $OutputPath = Join-Path $PSScriptRoot 'Color-Analyzer-0.1.0-Setup.exe' }
+if (-not $OutputPath) { $OutputPath = Join-Path $PSScriptRoot 'Color-Analyzer-0.1.0-CPU-Installer.zip' }
 if (-not $IExpressPath) { $IExpressPath = Join-Path $env:SystemRoot 'System32\iexpress.exe' }
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $portableZipPath = (Resolve-Path $PortableZip).Path
 $iexpress = (Resolve-Path $IExpressPath).Path
-$output = [System.IO.Path]::GetFullPath($OutputPath)
-$outputDir = Split-Path -Parent $output
+$outputZip = [System.IO.Path]::GetFullPath($OutputPath)
+$outputDir = Split-Path -Parent $outputZip
 
 if (-not (Test-Path -LiteralPath $portableZipPath -PathType Leaf)) {
     throw "Portable ZIP was not found: $PortableZip"
@@ -25,7 +25,11 @@ if (-not (Test-Path -LiteralPath $iexpress -PathType Leaf)) {
 
 New-Item -ItemType Directory -Path $outputDir -Force | Out-Null
 $staging = Join-Path $env:TEMP ('ColorAnalyzer-IExpress-' + [guid]::NewGuid().ToString('N'))
+$buildRoot = Join-Path $env:TEMP ('ColorAnalyzer-IExpress-Build-' + [guid]::NewGuid().ToString('N'))
+$setupExe = Join-Path $buildRoot 'Color-Analyzer-0.1.0-Setup.exe'
+$packageRoot = Join-Path $buildRoot 'Color Analyzer 0.1.0 CPU Installer'
 New-Item -ItemType Directory -Path $staging -Force | Out-Null
+New-Item -ItemType Directory -Path $packageRoot -Force | Out-Null
 
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'install.cmd') -Destination $staging -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'install.ps1') -Destination $staging -Force
@@ -59,7 +63,7 @@ SourceFiles=SourceFiles
 InstallPrompt=
 DisplayLicense=
 FinishMessage=
-TargetName=$output
+TargetName=$setupExe
 FriendlyName=Color Analyzer 0.1.0 CPU Setup
 AppLaunched=install.cmd
 PostInstallCmd=<None>
@@ -78,11 +82,16 @@ SourceFiles0=$staging\
 Set-Content -LiteralPath $sedPath -Value $sed -Encoding ASCII
 
 $process = Start-Process -FilePath $iexpress -ArgumentList @('/N', '/Q', $sedPath) -Wait -PassThru
-if (-not (Test-Path -LiteralPath $output -PathType Leaf)) {
-    throw "IExpress failed with exit code $($process.ExitCode); installer was not created: $output"
+if (-not (Test-Path -LiteralPath $setupExe -PathType Leaf)) {
+    throw "IExpress failed with exit code $($process.ExitCode); installer was not created: $setupExe"
 }
 
-$hash = Get-FileHash -LiteralPath $output -Algorithm SHA256
-Write-Output "Installer: $output"
-Write-Output "Size: $((Get-Item -LiteralPath $output).Length) bytes"
+$packageReadme = Join-Path $repoRoot 'INSTALLER.md'
+Copy-Item -LiteralPath $setupExe -Destination $packageRoot -Force
+Copy-Item -LiteralPath $packageReadme -Destination $packageRoot -Force
+Compress-Archive -Path $packageRoot -DestinationPath $outputZip -CompressionLevel Optimal -Force
+
+$hash = Get-FileHash -LiteralPath $outputZip -Algorithm SHA256
+Write-Output "Installer ZIP: $outputZip"
+Write-Output "Size: $((Get-Item -LiteralPath $outputZip).Length) bytes"
 Write-Output "SHA-256: $($hash.Hash)"

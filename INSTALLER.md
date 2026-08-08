@@ -1,6 +1,6 @@
 # Color Analyzer Installer
 
-`installer\Color-Analyzer-0.1.0-Setup.exe` is a self-extracting Windows installer for the CPU build.
+`installer\Color-Analyzer-0.1.0-CPU-Installer.zip` is the named installer package for the CPU build. Extract the ZIP, then run `Color-Analyzer-0.1.0-Setup.exe` inside it.
 
 ## Install
 
@@ -23,7 +23,7 @@ powershell -ExecutionPolicy Bypass -File .\installer\build-installer.ps1 `
   -PortableZip "C:\path\to\Color-Analyzer-0.1.0-windows-x64-CPU-portable.zip"
 ```
 
-The portable ZIP must contain the same CPU distribution as the repository root. The build script uses Windows IExpress, which is included with Windows.
+The portable ZIP must contain the same CPU distribution as the repository root. The build script uses Windows IExpress, which is included with Windows, and writes the named installer ZIP to the `installer` directory.
 
 ## Remove
 
