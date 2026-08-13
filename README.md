@@ -2,9 +2,7 @@
 
 > **Download GUI installer (default: `C:\Program Files\Color Analyzer`):** [Color-Analyzer-0.1.0-CPU-Installer.zip](https://github.com/hbhdbvd7/Color-Analyzer/raw/refs/heads/main/installer/Color-Analyzer-0.1.0-CPU-Installer.zip)
 
-Windows x64 纯 CPU 静帧色彩分析器便携版。
-
-![RGB additive kaleidoscope icon](color_analyzer_rgb_additive_kaleidoscope_v2.png)
+Windows x64 静帧色彩分析器
 
 ## Run
 
